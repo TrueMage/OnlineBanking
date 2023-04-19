@@ -127,7 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Banking.cpp" />
+    <ClCompile Include="Bankcard.cpp" />
+    <ClCompile Include="CreditCard.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Expense.cpp" />
+    <ClCompile Include="OnlineBank.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BankCard.h" />
+    <ClInclude Include="CreditCard.h" />
+    <ClInclude Include="Expense.h" />
+    <ClInclude Include="Functions.h" />
+    <ClInclude Include="OnlineBank.h" />
+    <ClInclude Include="VirtualMoney.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
