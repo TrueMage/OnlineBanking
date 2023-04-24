@@ -4,8 +4,12 @@ using namespace std;
 
 class VirtualMoney {
 protected:
-	int amount;
+	double amount{};
 public:
-	virtual void GetAmount() const = 0;
-	virtual void ReduceAmount() const = 0;
+	int GetAmount() const {
+		return amount;
+	};
+	virtual bool ReduceAmount() = 0;
+	virtual void AddAmount(double amount) = 0;
+	virtual char* GetLast4Digits() = 0;
 };

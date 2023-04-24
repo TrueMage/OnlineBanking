@@ -33,15 +33,18 @@
     <ClCompile Include="CreditCard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DebitCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EWallet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Expense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OnlineBank.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BankCard.h">
@@ -51,6 +54,12 @@
       <Filter>Header Files\VirtualMoney</Filter>
     </ClInclude>
     <ClInclude Include="VirtualMoney.h">
+      <Filter>Header Files\VirtualMoney</Filter>
+    </ClInclude>
+    <ClInclude Include="DebitCard.h">
+      <Filter>Header Files\VirtualMoney</Filter>
+    </ClInclude>
+    <ClInclude Include="EWallet.h">
       <Filter>Header Files\VirtualMoney</Filter>
     </ClInclude>
   </ItemGroup>

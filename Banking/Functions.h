@@ -5,7 +5,7 @@
 using namespace std;
 
 void PrintMainMenu() {
-	cout << "\tМЕНЮ";
+	cout << "\n\tМЕНЮ";
 
 	cout << "\n(0) Список добавленных кошельков и карт";
 	cout << "\n(1) Добавить новый кошелек или карту";

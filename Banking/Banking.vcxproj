@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClCompile Include="Bankcard.cpp" />
     <ClCompile Include="CreditCard.cpp" />
+    <ClCompile Include="DebitCard.cpp" />
+    <ClCompile Include="EWallet.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Expense.cpp" />
     <ClCompile Include="OnlineBank.cpp" />
@@ -136,8 +138,9 @@
   <ItemGroup>
     <ClInclude Include="BankCard.h" />
     <ClInclude Include="CreditCard.h" />
+    <ClInclude Include="DebitCard.h" />
+    <ClInclude Include="EWallet.h" />
     <ClInclude Include="Expense.h" />
-    <ClInclude Include="Functions.h" />
     <ClInclude Include="OnlineBank.h" />
     <ClInclude Include="VirtualMoney.h" />
   </ItemGroup>

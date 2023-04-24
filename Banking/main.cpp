@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include <string>
 
-#include "Functions.h"
 #include "OnlineBank.h"
 
 using namespace std;
@@ -12,10 +11,10 @@ int main()
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
 
-	OnlineBank sys();
+	OnlineBank sys;
 
 	while (true) {
-		PrintMainMenu();
+		sys.PrintMainMenu();
 
 		int selected;
 		cin >> selected;
@@ -23,19 +22,17 @@ int main()
 		if (selected == 5) break;
 
 		switch (selected){
-			case 0:
-
-				system("cls");
+			case 0:				
+				sys.PrintAllAccounts(true);
 				break;
 
 			case 1:
-
-				system("cls");
+				sys.AddNewAccount();
 				break;
 
 			case 2:
-
 				system("cls");
+				sys.TopUpAccount();
 				break;
 
 			case 3:
