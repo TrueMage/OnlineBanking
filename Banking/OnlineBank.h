@@ -58,7 +58,7 @@ public:
 
 		for (int i = 0; i < countAccounts; i++)
 		{
-			cout << "#" << i << " " << typeid(this).name() << " " << accounts[i]->GetLast4Digits() << " $" << accounts[i]->GetAmount() << "\n";
+			cout << "#" << i << " " << " " << accounts[i]->GetLast4Digits() << " $" << accounts[i]->GetAmount() << "\n";
 		}
 	}
 
@@ -94,6 +94,7 @@ public:
 						int amount;
 						string num;
 						string name;
+						unsigned int CVV;
 
 						switch (selected) {
 							case 0:
@@ -109,16 +110,19 @@ public:
 								cout << "Введите к-ство денег на карточке: ";
 								cin >> amount;
 
+								cout << "Введите CVV: ";
+								cin >> CVV;
+
 								cin.ignore(1);
 								cout << "Введите номер карточки: ";
 								getline(cin,num);
 
 								cout << "Введите имя владельца: ";
-								getline(cin,name);
+								getline(cin, name);
 
-								if (limit > 0) AddAccountToArray(new CreditCard(amount, num, name, limit));
-								else AddAccountToArray(new DebitCard(amount, num, name));
-								// limit ? new CreditCard(amount, num, name, limit) : new DebitCard(amount, num, name) Тернарный оператор нельзя перегружать, но компилятор всё-равно требует? 
+								if (limit > 0) AddAccountToArray(new CreditCard(amount, num, name, limit, CVV));
+								else AddAccountToArray(new DebitCard(amount, num, name, CVV));
+								// limit ? new CreditCard(amount, num, name, limit, CVV) : new DebitCard(amount, num, name, CVV) Тернарный оператор нельзя перегружать, но компилятор всё-равно требует? 
 
 								system("cls");
 								cout << "Карточка была успешна добавлена\n";

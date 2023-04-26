@@ -6,16 +6,16 @@
 class BankCard : public VirtualMoney
 {
 protected:
-	string CardNumber;
-	string CardHolder;
-
+	string PAN{};
+	string CardHolder{};
+	string ServiceCode{};
 public:
 	char* GetLast4Digits() override{
 		char* digits = new char[5] {'*', '0', '0', '0', '\0'};
 
-		for (size_t i = CardNumber.length() - 3, j = 1; i < CardNumber.length(); i++, j++)
+		for (size_t i = PAN.length() - 3, j = 1; i < PAN.length(); i++, j++)
 		{
-			digits[j] = CardNumber[i];
+			digits[j] = PAN[i];
 		}
 
 		return digits;

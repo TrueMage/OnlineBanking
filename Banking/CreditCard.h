@@ -2,17 +2,20 @@
 
 #include "Bankcard.h"
 #include <string>
+#include <time.h>
 
 class CreditCard : public BankCard
 {
 private:
-	unsigned int CreditLimit;
+	unsigned int CreditLimit{};
 public:
-	CreditCard(double amount, string CardNumber, string CardHolder, unsigned int CreditLimit){
+	CreditCard(double amount, string CardNumber, string CardHolder, unsigned int CreditLimit, unsigned int CVV){
+		srand(time(NULL));
 		this->amount = amount;
-		this->CardNumber = CardNumber;
+		this->PAN = CardNumber;
 		this->CardHolder = CardHolder;
 		this->CreditLimit = CreditLimit;
+		this->ServiceCode = rand() % CVV;
 	}
 	bool ReduceAmount() {
 		return true;
