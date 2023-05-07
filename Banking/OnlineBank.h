@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "VirtualMoney.h"
+#include "Expense.h"
 
 #include "CreditCard.h"
 #include "DebitCard.h"
@@ -16,6 +17,7 @@ using namespace std;
 class OnlineBank {
 private:
 	vector<VirtualMoney*> accounts;
+	vector<Expense> expenses;
 public:
 	long int GetFullBudget() const{
 		long double budget = 0;
@@ -35,6 +37,7 @@ public:
 
 		cout << "\n(3) Âíåñåíèå çàòðàòîâ";
 		cout << "\n(4) Ñôîðìèðîâàòü îò÷åò ïî çàòðàòàì";
+		cout << "\n(5) Ñôîðìèðîâàòü ðåéòèíã ïî çàòðàòàì";
 
 		cout << "\n(5) Âûõîä\n";
 		//cout << "\n (5) Ñîõðàíèòü îò÷åò è ðåéòèíã â ôàéë";
@@ -176,15 +179,16 @@ public:
 	}
 
 	void TopUpAccount() {
+		system("cls");
+
 		PrintAllAccounts();
 
 		int selected;
-
 		while (true) {
 			cout << "\nÂâåäèòå íîìåð â ñïèñêå àêêàóíòà: ";
 			cin >> selected;
 
-			if (selected < 0 || selected >> accounts.size() - 1) cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+			if (selected < 0 || selected > accounts.size() - 1) cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
 			else break;
 		}
 		
@@ -203,5 +207,93 @@ public:
 		system("cls");
 		cout << "Áàëàíñ áûë óñïåøíî ïîïîëíåí\n";
 		return;
+	}
+
+	void CreateExpense() {
+		system("cls");
+
+		unsigned int amount;
+		cout << "Ââåäèòå ñóììó ðàñõîäà: ";
+		cin >> amount;
+
+		while (true) {
+			cout << "Êàêèì îáðàçîì îïëàòèòü ðàñõîä?\n";
+
+			cout << "(0) Âûõîä\n";
+			cout << "(1) Ðàçäåëèòü ìåæäó âñåìè ñ÷åòàìè\n";
+			cout << "(2) Îïëàòèòü êîíêðåòíûì ñ÷¸òîì\n";
+
+			int selected;
+			cin >> selected;
+
+			switch (selected) {
+				case 0: return;
+
+				case 1:
+					//double amountPerAcc = amount / accounts.size();
+					//bool avoidableDebts = true;
+
+					for (int i = 0; i < accounts.size(); i++) {
+						//cout << typeid(accounts[i]).name() << '\n';
+					}
+
+					//if(avoidableDebts)
+
+					break;
+
+				case 2:
+					while (true) {
+						PrintAllAccounts();
+
+						while (true) {
+							cout << "\nÂâåäèòå íîìåð â ñïèñêå àêêàóíòà: ";
+							cin >> selected;
+
+							if (selected < 0 || selected > accounts.size() - 1) cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+							else break;
+						}
+
+						if (accounts[selected]->ReduceAmount(amount)) break;
+						else {
+							system("cls");
+							cout << "ÎØÈÁÊÀ: Íà âûáðàííîì ñ÷¸òó íåäîñòàòî÷íî äåíåã";
+						}
+					}
+					break;
+
+				default:
+					cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+			}
+		}
+	}
+
+	void CreateReport() {
+		while (true) {
+			system("cls");
+
+			cout << "(0) Âûõîä\n";
+			cout << "(1) Çà äåíü\n";
+			cout << "(2) Çà íåäåëþ\n";
+			cout << "(3) Çà ìåñÿöü\n";
+
+			int selected;
+			cin >> selected;
+
+			switch (selected) {
+				case 0:return;
+
+				case 1:
+					break;
+
+				case 2:
+					break;
+
+				case 3:
+					break;
+
+				default:
+					cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+			}
+		}	
 	}
 };

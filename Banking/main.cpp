@@ -19,7 +19,7 @@ int main()
 		int selected;
 		cin >> selected;
 
-		if (selected == 5) break;
+		if (selected == 6) break;
 
 		switch (selected){
 			case 0:				
@@ -31,20 +31,19 @@ int main()
 				break;
 
 			case 2:
-				system("cls");
 				sys.TopUpAccount();
 				break;
 
 			case 3:
-
-				system("cls");
+				sys.CreateExpense();
 				break;
 
 			case 4:
-
-				system("cls");
+				sys.CreateReport();
 				break;
 
+			case 5:
+				break;
 			default:
 				cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ";
 		}
