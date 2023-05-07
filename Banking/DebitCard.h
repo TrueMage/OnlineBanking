@@ -15,7 +15,11 @@ public:
 		this->ServiceCode = rand() % CVV;
 	}
 
-	bool ReduceAmount() {
-		return true;
+	bool ReduceAmount(double amount) {
+		if (this->amount - amount >= 0) {
+			this->amount -= amount;
+			return true;
+		}
+		else return false;
 	}
 };

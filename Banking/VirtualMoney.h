@@ -6,10 +6,15 @@ class VirtualMoney {
 protected:
 	double amount{};
 public:
+
+	// Инспекторы
 	int GetAmount() const {
 		return amount;
-	};
-	virtual bool ReduceAmount() = 0;
+	}
+
+	virtual char* GetLast4Digits() const = 0;
+
+	// Модификаторы
+	virtual bool ReduceAmount(double amount) = 0;
 	virtual void AddAmount(double amount) = 0;
-	virtual char* GetLast4Digits() = 0;
 };

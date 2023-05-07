@@ -17,8 +17,13 @@ public:
 		this->CreditLimit = CreditLimit;
 		this->ServiceCode = rand() % CVV;
 	}
-	bool ReduceAmount() {
-		return true;
+
+	bool ReduceAmount(double amount) {
+		if (abs(this->amount - amount) <= CreditLimit) {
+			this->amount -= amount;
+			return true;
+		}
+		else return false;
 	}
 };
 

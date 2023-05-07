@@ -10,7 +10,7 @@ protected:
 	string CardHolder{};
 	string ServiceCode{};
 public:
-	char* GetLast4Digits() override{
+	char* GetLast4Digits() const{
 		char* digits = new char[5] {'*', '0', '0', '0', '\0'};
 
 		for (size_t i = PAN.length() - 3, j = 1; i < PAN.length(); i++, j++)

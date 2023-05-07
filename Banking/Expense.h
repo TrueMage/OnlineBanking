@@ -16,13 +16,13 @@ enum CategoryCodes{
 class Expense
 {
 private:
-	unsigned int amount;
-	const string date;
-	unsigned int category;
+	unsigned int amount{};
+	string date{};
+	unsigned int category{};
 public:
 	Expense(unsigned int amount, string date, int category) {
 		this->amount = amount;
-		//this->date = date;
+		this->date = date;
 		this->category = category;
 	}
 };

@@ -3,34 +3,23 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
+#include <vector>
 
 #include "VirtualMoney.h"
+
 #include "CreditCard.h"
 #include "DebitCard.h"
+#include "EWallet.h"
 
 using namespace std;
 
 class OnlineBank {
 private:
-	VirtualMoney** accounts;
-	int countAccounts{};
-
-	void AddAccountToArray(VirtualMoney* account) {
-		VirtualMoney** newaccounts = new VirtualMoney*[countAccounts+1];
-		for (int i = 0; i < countAccounts; i++)
-		{
-			newaccounts[i] = accounts[i];
-		}
-		newaccounts[countAccounts] = account;
-		
-		accounts = newaccounts;
-		newaccounts = nullptr;
-		countAccounts += 1;
-	}
+	vector<VirtualMoney*> accounts;
 public:
 	long int GetFullBudget() const{
 		long double budget = 0;
-		for (int i = 0; i < countAccounts; i++)
+		for (int i = 0; i < accounts.size(); i++)
 		{
 			budget += accounts[i]->GetAmount();
 		}
@@ -56,7 +45,7 @@ public:
 
 		if(showbudget) cout << "ОБЩИЙ БЮДЖЕТ $" << GetFullBudget() << "\n";
 
-		for (int i = 0; i < countAccounts; i++)
+		for (int i = 0; i < accounts.size(); i++)
 		{
 			cout << "#" << i << " " << " " << accounts[i]->GetLast4Digits() << " $" << accounts[i]->GetAmount() << "\n";
 		}
@@ -77,7 +66,53 @@ public:
 				case 0: return;
 
 				case 1:
+					while (true) {
+						system("cls");
 
+						cout << "(0) Выход\n";
+						cout << "(1) PayPal\n";
+						cout << "(2) Payoneer\n";
+						cout << "(3) Alipay\n";
+
+						cin >> selected;
+
+						unsigned int amount;
+						string AuthToken;
+						string WalletID{};
+						PaySystems PaySystem{};
+
+						switch (selected) {
+							case 0: return;
+
+							case 1:
+								PaySystem = PayPal;
+								break;
+
+							case 2:
+								PaySystem = Payoneer;
+								break;
+
+							case 3:
+								PaySystem = Alipay;
+								break;
+
+							default:
+								cout << "ОШИБКА: НЕКОРРЕКТНЫЙ ВВОД\n";
+								continue;
+						}
+						cout << "Введите к-ство денег на кошельке: ";
+						cin >> amount;
+						cin.ignore(1);
+
+						cout << "Введите ключ разрешение: ";
+						getline(cin, AuthToken);
+
+						cout << "Введите номер кошелька: ";
+						getline(cin, WalletID);
+
+						accounts.push_back(new EWallet(amount, AuthToken, WalletID, PaySystem));
+						return;
+					}
 					break;
 
 				case 2:
@@ -97,8 +132,7 @@ public:
 						unsigned int CVV;
 
 						switch (selected) {
-							case 0:
-								return;
+							case 0:return;
 
 							case 1:
 								system("cls");
@@ -120,9 +154,11 @@ public:
 								cout << "Введите имя владельца: ";
 								getline(cin, name);
 
-								if (limit > 0) AddAccountToArray(new CreditCard(amount, num, name, limit, CVV));
-								else AddAccountToArray(new DebitCard(amount, num, name, CVV));
-								// limit ? new CreditCard(amount, num, name, limit, CVV) : new DebitCard(amount, num, name, CVV) Тернарный оператор нельзя перегружать, но компилятор всё-равно требует? 
+								if (limit > 0) accounts.push_back(new CreditCard(amount, num, name, limit, CVV));
+								else accounts.push_back(new DebitCard(amount, num, name, CVV));
+
+								// limit ? new CreditCard(amount, num, name, limit, CVV) : new DebitCard(amount, num, name, CVV)
+								// Тернарный оператор нельзя перегружать, но компилятор всё-равно требует? 
 
 								system("cls");
 								cout << "Карточка была успешна добавлена\n";
@@ -148,7 +184,7 @@ public:
 			cout << "\nВведите номер в списке аккаунта: ";
 			cin >> selected;
 
-			if (selected < 0 || selected >> countAccounts - 1) cout << "ОШИБКА: НЕКОРРЕКТНЫЙ ВВОД\n";
+			if (selected < 0 || selected >> accounts.size() - 1) cout << "ОШИБКА: НЕКОРРЕКТНЫЙ ВВОД\n";
 			else break;
 		}
 		
