@@ -8,7 +8,7 @@ protected:
 public:
 
 	// Инспекторы
-	int GetAmount() const {
+	double GetAmount() const {
 		return amount;
 	}
 

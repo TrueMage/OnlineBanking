@@ -8,7 +8,7 @@ class DebitCard : public BankCard
 {
 public:
 	DebitCard(double amount, string CardNumber, string CardHolder, int CVV) {
-		srand(time(NULL));
+		srand((unsigned int)time(NULL));
 		this->amount = amount;
 		this->PAN = CardNumber;
 		this->CardHolder = CardHolder;

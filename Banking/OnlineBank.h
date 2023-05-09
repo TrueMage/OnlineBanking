@@ -12,14 +12,16 @@
 #include "DebitCard.h"
 #include "EWallet.h"
 
+#include <ctime>
+
 using namespace std;
 
 class OnlineBank {
 private:
 	vector<VirtualMoney*> accounts;
-	vector<Expense> expenses;
+	vector<Expense*> expenses;
 public:
-	long int GetFullBudget() const{
+	long double GetFullBudget() const{
 		long double budget = 0;
 		for (int i = 0; i < accounts.size(); i++)
 		{
@@ -39,7 +41,7 @@ public:
 		cout << "\n(4) Сформировать отчет по затратам";
 		cout << "\n(5) Сформировать рейтинг по затратам";
 
-		cout << "\n(5) Выход\n";
+		cout << "\n(6) Выход\n";
 		//cout << "\n (5) Сохранить отчет и рейтинг в файл";
 	}
 
@@ -154,6 +156,7 @@ public:
 								cout << "Введите номер карточки: ";
 								getline(cin,num);
 
+								// https://www.geeksforgeeks.org/luhn-algorithm/
 								cout << "Введите имя владельца: ";
 								getline(cin, name);
 
@@ -212,11 +215,15 @@ public:
 	void CreateExpense() {
 		system("cls");
 
+		VirtualMoney* paidWith = nullptr;
+		CategoryCodes category;
+		string date;
 		unsigned int amount;
 		cout << "Введите сумму расхода: ";
 		cin >> amount;
 
 		while (true) {
+			system("cls");
 			cout << "Каким образом оплатить расход?\n";
 
 			cout << "(0) Выход\n";
@@ -226,6 +233,7 @@ public:
 			int selected;
 			cin >> selected;
 
+			system("cls");
 			switch (selected) {
 				case 0: return;
 
@@ -244,7 +252,6 @@ public:
 				case 2:
 					while (true) {
 						PrintAllAccounts();
-
 						while (true) {
 							cout << "\nВведите номер в списке аккаунта: ";
 							cin >> selected;
@@ -253,7 +260,10 @@ public:
 							else break;
 						}
 
-						if (accounts[selected]->ReduceAmount(amount)) break;
+						if (accounts[selected]->ReduceAmount(amount)) {
+							paidWith = accounts[selected];
+							break;
+						}
 						else {
 							system("cls");
 							cout << "ОШИБКА: На выбранном счёту недостаточно денег";
@@ -262,12 +272,65 @@ public:
 					break;
 
 				default:
+					system("cls");
 					cout << "ОШИБКА: НЕКОРРЕКТНЫЙ ВВОД\n";
+					continue;
 			}
+			break;
 		}
+
+		while (true) {
+			system("cls");
+			cout << "Выберите категорию расходов: \n";
+
+			cout << "(1) Продукты\n";
+			cout << "(2) Развлечения\n";
+			cout << "(3) Коммунальные услуги\n";
+			cout << "(4) Уход за машиной\n";
+
+			int selected;
+			cin >> selected;
+
+			switch (selected)
+			{
+				case 1:
+					category = Grocery;
+					break;
+
+				case 2:
+					category = Entertainment;
+					break;
+
+				case 3:
+					category = Rent;
+					break;
+
+				case 4:
+					category = CarMaintenance;
+					break;
+			default:
+				cout << "ОШИБКА: НЕКОРРЕКТНЫЙ ВВОД\n";
+				continue;
+			}
+			break;
+		}
+		cin.ignore(1);
+
+		system("cls");
+		cout << "Введите дату в формате(31/05/2023): ";
+		getline(cin, date);
+
+		system("cls");
+
+		expenses.push_back(new Expense(amount, date, category, paidWith));
+		cout << "Расход был успешно добавлен\n";
 	}
 
 	void CreateReport() {
+		time_t now = time(0);
+		tm dt;
+		localtime_s(&dt, &now);
+
 		while (true) {
 			system("cls");
 
@@ -283,17 +346,46 @@ public:
 				case 0:return;
 
 				case 1:
+					system("cls");
+					cout << "РАСХОДЫ ЗА ДЕНЬ\n";
+					for (Expense* current : expenses)
+					{
+						string date = current->getDate();
+
+						int day = strtol(new char[2] {date[0], date[1]}, NULL, 10);
+						int month = strtol(new char[2] {date[3], date[4]}, NULL, 10) - 1;
+						int year = strtol(new char[4] {date[6], date[7], date[8], date[9]}, NULL, 10) - 1900;
+
+						if (dt.tm_mday == day && dt.tm_mon == month && dt.tm_year == year) current->PrintInfo();
+					}
+					cout << "\n";
 					break;
 
 				case 2:
+					system("cls");
+					cout << "РАСХОДЫ ЗА НЕДЕЛЮ\n";
+
 					break;
 
 				case 3:
+					system("cls");
+					cout << "РАСХОДЫ ЗА МЕСЯЦЬ\n";
+					for (Expense* current : expenses)
+					{
+						string date = current->getDate();
+
+						int month = strtol(new char[2] {date[3], date[4]}, NULL, 10) - 1;
+						int year = strtol(new char[4] {date[6], date[7], date[8], date[9]}, NULL, 10) - 1900;
+
+						if (dt.tm_mon == month && dt.tm_year == year) current->PrintInfo();
+					}
+					cout << "\n";
 					break;
 
 				default:
 					cout << "ОШИБКА: НЕКОРРЕКТНЫЙ ВВОД\n";
 			}
+			break;
 		}	
 	}
 };

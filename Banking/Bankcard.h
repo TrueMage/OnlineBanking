@@ -24,5 +24,7 @@ public:
 	void AddAmount(double amount) {
 		this->amount += amount;
 	}
+
+
 };
 

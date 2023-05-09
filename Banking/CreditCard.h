@@ -10,7 +10,7 @@ private:
 	unsigned int CreditLimit{};
 public:
 	CreditCard(double amount, string CardNumber, string CardHolder, unsigned int CreditLimit, unsigned int CVV){
-		srand(time(NULL));
+		srand((unsigned int)time(NULL));
 		this->amount = amount;
 		this->PAN = CardNumber;
 		this->CardHolder = CardHolder;
