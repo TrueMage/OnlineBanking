@@ -238,15 +238,29 @@ public:
 				case 0: return;
 
 				case 1:
-					//double amountPerAcc = amount / accounts.size();
-					//bool avoidableDebts = true;
+					bool avoidableDebts = true;
 
-					for (int i = 0; i < accounts.size(); i++) {
-						//cout << typeid(accounts[i]).name() << '\n';
+					int count = 0;
+					for (VirtualMoney* current : accounts) {
+						if (dynamic_cast<CreditCard*>(current)) continue;
+						count++;
 					}
 
-					//if(avoidableDebts)
+					double amountPerAcc = amount / count;
+					for (VirtualMoney* current : accounts) {
+						if (dynamic_cast<CreditCard*>(current)) continue;
+						if (!current->isAmountOnBalance(amountPerAcc)) avoidableDebts = false;
+					}
 
+					if (avoidableDebts) {
+						for (VirtualMoney* current : accounts) {
+							if (dynamic_cast<CreditCard*>(current)) continue;
+							current->ReduceAmount(amountPerAcc);
+						}
+					}
+					else {
+
+					}
 					break;
 
 				case 2:
@@ -384,8 +398,74 @@ public:
 
 				default:
 					cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+					continue;
 			}
 			break;
 		}	
+	}
+
+	void CreateRating() {
+		while (true) {
+			system("cls");
+
+			cout << "(0) Âûõîä\n";
+			cout << "(1) ÒÎÏ-3 çàòðàò\n";
+			cout << "(2) ÒÎÏ-3 êàòåãîðèé\n";
+
+			int selected;
+			cin >> selected;
+
+			switch (selected)
+			{
+				case 0: return;
+
+				case 1:
+					while (true) {
+						cout << "(0) Âûõîä\n";
+						cout << "(1) Çà íåäåëþ\n";
+						cout << "(2) Çà ìåñÿöü\n";
+
+						cin >> selected;
+
+						switch (selected) {
+						case 0: return;
+						case 1:
+							break;
+						case 2:
+							break;
+						default:
+							cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+							continue;
+						}
+					}
+					break;
+
+				case 2:
+					while (true) {
+						cout << "(0) Âûõîä\n";
+						cout << "(1) Çà íåäåëþ\n";
+						cout << "(2) Çà ìåñÿöü\n";
+
+						cin >> selected;
+
+						switch (selected) {
+						case 0: return;
+						case 1:
+							break;
+						case 2:
+							break;
+						default:
+							cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+							continue;
+						}
+					}
+					break;
+
+				default:
+					cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+					continue;
+			}
+		break;
+		}
 	}
 };
