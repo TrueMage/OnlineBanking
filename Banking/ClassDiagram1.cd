@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Expense" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAACAAAJAEAAAAAAAAAAgAAAAIAIAQAQAAA=</HashCode>
+      <FileName>Expense.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnlineBank" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAUCAAAAAAACAAAAIAAIAAAAAQAAAEBAAA=</HashCode>
+      <FileName>OnlineBank.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BankCard" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAQAAAAAAAEAAAAAAAAAAAAAAAAABAAABAAAAA=</HashCode>
+      <FileName>BankCard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CreditCard" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CreditCard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DebitCard" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DebitCard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EWallet" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAABAEEAAAEAAAEAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>EWallet.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VirtualMoney" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAEAAAACAAAAAAAgAAAABAACAAAAAA=</HashCode>
+      <FileName>VirtualMoney.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CategoryCodes" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAABAAAAAAAAAAAAAAAAACAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Expense.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PaySystems" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQAACAAAAAAAA=</HashCode>
+      <FileName>EWallet.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

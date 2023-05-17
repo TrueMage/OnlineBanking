@@ -25,5 +25,10 @@ public:
 		}
 		else return false;
 	}
+
+	bool isInDebt() const {
+		if (amount < 0) return true;
+		else false;
+	}
 };
 

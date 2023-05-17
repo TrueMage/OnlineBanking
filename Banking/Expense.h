@@ -5,6 +5,7 @@
 #include <string>
 
 #include "VirtualMoney.h"
+#include "Date.h"
 
 using namespace std;
 
@@ -19,18 +20,18 @@ class Expense
 {
 private:
 	unsigned int amount{};
-	string date{};
 	CategoryCodes category{};
 	VirtualMoney* paidWith;
+	Date* date;
 public:
-	Expense(unsigned int amount, string date, CategoryCodes category, VirtualMoney* paidWith) {
+	Expense(unsigned int amount, string date, CategoryCodes category, VirtualMoney* paidWith){
 		this->amount = amount;
-		this->date = date;
+		this->date = new Date(date);
 		this->category = category;
 		this->paidWith = paidWith;
 	}
 
-	string getDate() const{
+	Date* getDate() const{
 		return date;
 	}
 
@@ -66,6 +67,7 @@ public:
 			cat = "Уход за машиной";
 			break;
 		}
-		cout << date << " $" << amount << " " << cat << " Оплачено " << paidWith->GetLast4Digits();
+		date->PrintDate();
+		cout << " $" << amount << " " << cat << " Оплачено " << paidWith->GetLast4Digits();
 	}
 };

@@ -12,8 +12,6 @@
 #include "DebitCard.h"
 #include "EWallet.h"
 
-#include <ctime>
-
 using namespace std;
 
 class OnlineBank {
@@ -234,21 +232,34 @@ public:
 			cin >> selected;
 
 			system("cls");
+
+			bool avoidableDebts = true;
+			int count = 0;
+			double amountPerAcc = 0;
+
 			switch (selected) {
 				case 0: return;
 
 				case 1:
-					bool avoidableDebts = true;
 
-					int count = 0;
 					for (VirtualMoney* current : accounts) {
-						if (dynamic_cast<CreditCard*>(current)) continue;
+						CreditCard* check = dynamic_cast<CreditCard*>(current);
+						if (check) {
+							if (check->isInDebt()) continue;
+							else count++;
+						}
 						count++;
 					}
 
-					double amountPerAcc = amount / count;
+					amountPerAcc = amount / count;
 					for (VirtualMoney* current : accounts) {
-						if (dynamic_cast<CreditCard*>(current)) continue;
+						CreditCard* check = dynamic_cast<CreditCard*>(current);
+						if (check) {
+							if (check->isInDebt()) continue;
+							else {
+								if (!current->isAmountOnBalance(amountPerAcc)) avoidableDebts = false;
+							}
+						}
 						if (!current->isAmountOnBalance(amountPerAcc)) avoidableDebts = false;
 					}
 
@@ -257,9 +268,16 @@ public:
 							if (dynamic_cast<CreditCard*>(current)) continue;
 							current->ReduceAmount(amountPerAcc);
 						}
+						cout << "Óäàëîñü ðàçäåëèòü çàòðàòó ìåæäó ñ÷åòàìè áåç èñïîëüçîâàíèå êðåäèòà\nÏðîäîëîæàåì\n";
 					}
 					else {
+						cout << "Íå óäàëîñü ðàçäåëèòü çàòðàòó ìåæäó ñ÷åòàìè áåç èñïîëüçîâàíèå êðåäèòà.\nÏîïðîáîâàòü ñ èñïîëüçîâàíèåì êðåäèòîâ?(0 - Äà / 1 - Íåò)\n";
+						cin >> selected;
 
+						if (selected == 0) {
+
+						}
+						else continue;
 					}
 					break;
 
@@ -341,57 +359,126 @@ public:
 	}
 
 	void CreateReport() {
-		time_t now = time(0);
-		tm dt;
-		localtime_s(&dt, &now);
-
 		while (true) {
 			system("cls");
 
 			cout << "(0) Âûõîä\n";
 			cout << "(1) Çà äåíü\n";
 			cout << "(2) Çà íåäåëþ\n";
-			cout << "(3) Çà ìåñÿöü\n";
+			cout << "(3) Çà ìåñÿö\n";
 
 			int selected;
 			cin >> selected;
 
+			system("cls");
+			string date;
 			switch (selected) {
 				case 0:return;
 
 				case 1:
-					system("cls");
-					cout << "ÐÀÑÕÎÄÛ ÇÀ ÄÅÍÜ\n";
-					for (Expense* current : expenses)
-					{
-						string date = current->getDate();
+					while (true) {
+						cout << "(0) Âûõîä\n";
+						cout << "(1) Çà òåêóùèé äåíü\n";
+						cout << "(2) Âûáðàòü êîíêðåòíûé äåíü\n";
 
-						int day = strtol(new char[2] {date[0], date[1]}, NULL, 10);
-						int month = strtol(new char[2] {date[3], date[4]}, NULL, 10) - 1;
-						int year = strtol(new char[4] {date[6], date[7], date[8], date[9]}, NULL, 10) - 1900;
+						cin >> selected;
 
-						if (dt.tm_mday == day && dt.tm_mon == month && dt.tm_year == year) current->PrintInfo();
+						system("cls");
+						Date* searched;
+						switch (selected) {
+							case 0: return;
+
+							case 1:
+								cout << "ÐÀÑÕÎÄÛ ÇÀ ÒÅÊÓÙÈÉ ÄÅÍÜ\n";
+
+								for (Expense* current : expenses)
+									if (current->getDate()->isToday()) current->PrintInfo();
+
+								cout << "\n";
+								break;
+							case 2:
+								cout << "Ââåäèòå äàòó â ôîðìàòå(31/05/2023)";
+								cin >> date;
+
+								system("cls");
+								cout << "ÐÀÑÕÎÄÛ ÇÀ " << date << " \n";
+
+								searched = new Date(date);
+								for (Expense* current : expenses)
+									if (*current->getDate() == *searched) current->PrintInfo();
+
+								cout << "\n";
+								break;
+
+							default:
+								cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+								continue;
+						}
+						break;
 					}
-					cout << "\n";
 					break;
 
 				case 2:
-					system("cls");
-					cout << "ÐÀÑÕÎÄÛ ÇÀ ÍÅÄÅËÞ\n";
+					while (true) {
+						cout << "(0) Âûõîä\n";
+						cout << "(1) Çà òåêóùóþ íåäåëþ\n";
+						cout << "(2) Âûáðàòü êîíêðåòíóþ íåäåëþ\n";
 
+						cin >> selected;
+
+						system("cls");
+						switch (selected) {
+						case 0: return;
+
+						case 1:
+							cout << "ÐÀÑÕÎÄÛ ÇÀ ÒÅÊÓÙÓÞ ÍÅÄÅËÞ\n";
+
+							for (Expense* current : expenses)
+								if (current->getDate()->isCurrentMonth()) current->PrintInfo();
+
+							cout << "\n";
+							break;
+						case 2:
+
+							break;
+
+						default:
+							cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+							continue;
+						}
+						break;
+					}
 					break;
 
 				case 3:
-					system("cls");
-					cout << "ÐÀÑÕÎÄÛ ÇÀ ÌÅÑßÖÜ\n";
-					for (Expense* current : expenses)
-					{
-						string date = current->getDate();
+					while (true) {
+						cout << "(0) Âûõîä\n";
+						cout << "(1) Çà òåêóùèé ìåñÿö\n";
+						cout << "(2) Âûáðàòü êîíêðåòíûé ìåñÿö\n";
 
-						int month = strtol(new char[2] {date[3], date[4]}, NULL, 10) - 1;
-						int year = strtol(new char[4] {date[6], date[7], date[8], date[9]}, NULL, 10) - 1900;
+						cin >> selected;
 
-						if (dt.tm_mon == month && dt.tm_year == year) current->PrintInfo();
+						system("cls");
+						switch (selected) {
+						case 0: return;
+
+						case 1:
+							cout << "ÐÀÑÕÎÄÛ ÇÀ ÒÅÊÓÙÈÉ ÌÅÑßÖ\n";
+
+							for (Expense* current : expenses)
+								if (current->getDate()->isCurrentMonth()) current->PrintInfo();
+
+							cout << "\n";
+							break;
+						case 2:
+
+							break;
+
+						default:
+							cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+							continue;
+						}
+						break;
 					}
 					cout << "\n";
 					break;
@@ -415,6 +502,7 @@ public:
 			int selected;
 			cin >> selected;
 
+			system("cls");
 			switch (selected)
 			{
 				case 0: return;

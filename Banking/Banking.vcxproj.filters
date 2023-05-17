@@ -62,5 +62,11 @@
     <ClInclude Include="EWallet.h">
       <Filter>Header Files\VirtualMoney</Filter>
     </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

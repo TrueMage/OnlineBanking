@@ -138,11 +138,15 @@
   <ItemGroup>
     <ClInclude Include="BankCard.h" />
     <ClInclude Include="CreditCard.h" />
+    <ClInclude Include="Date.h" />
     <ClInclude Include="DebitCard.h" />
     <ClInclude Include="EWallet.h" />
     <ClInclude Include="Expense.h" />
     <ClInclude Include="OnlineBank.h" />
     <ClInclude Include="VirtualMoney.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
