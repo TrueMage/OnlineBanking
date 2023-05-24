@@ -182,7 +182,14 @@ public:
 	void TopUpAccount() {
 		system("cls");
 
+		if (accounts.size() == 0) {
+			cout << "ОШИБКА: В системе нет добавленных счетов";
+			return;
+		}
+
 		PrintAllAccounts();
+
+
 
 		int selected;
 		while (true) {
@@ -213,6 +220,11 @@ public:
 	void CreateExpense() {
 		system("cls");
 
+		if(accounts.size() == 0) {
+			cout << "ОШИБКА: В системе нет добавленных счетов";
+			return;
+		}
+
 		VirtualMoney* paidWith = nullptr;
 		CategoryCodes category;
 		string date;
@@ -220,6 +232,10 @@ public:
 		cout << "Введите сумму расхода: ";
 		cin >> amount;
 
+		if (amount > GetFullBudget()) {
+			cout << "ОШИБКА: В БЮДЖЕТЕ НЕДОСТАТОЧНО ДЕНЕГ\n";
+			return;
+		}
 		while (true) {
 			system("cls");
 			cout << "Каким образом оплатить расход?\n";
@@ -275,7 +291,31 @@ public:
 						cin >> selected;
 
 						if (selected == 0) {
+							avoidableDebts = true;
 
+							amountPerAcc = amount / accounts.size();
+							for (VirtualMoney* current : accounts) {
+								CreditCard* check = dynamic_cast<CreditCard*>(current);
+								if (check) {
+									if (check->isAmountOnBalanceWCredit(amountPerAcc))
+									{
+										avoidableDebts = false;
+									}
+								}
+								
+							}
+
+							if (avoidableDebts) {
+								for (VirtualMoney* current : accounts) {
+									if (dynamic_cast<CreditCard*>(current)) continue;
+									current->ReduceAmount(amountPerAcc);
+								}
+								cout << "Удалось разделить затрату между счетами с использованием кредита\nПродоложаем\n";
+							}
+							else {
+								cout << "Не удалось разделить затрату между счетами.\n";
+								continue;
+							}
 						}
 						else continue;
 					}
@@ -312,7 +352,6 @@ public:
 		}
 
 		while (true) {
-			system("cls");
 			cout << "Выберите категорию расходов: \n";
 
 			cout << "(1) Продукты\n";
@@ -419,6 +458,7 @@ public:
 					break;
 
 				case 2:
+					Date * searched;
 					while (true) {
 						cout << "(0) Выход\n";
 						cout << "(1) За текущую неделю\n";
@@ -434,11 +474,20 @@ public:
 							cout << "РАСХОДЫ ЗА ТЕКУЩУЮ НЕДЕЛЮ\n";
 
 							for (Expense* current : expenses)
-								if (current->getDate()->isCurrentMonth()) current->PrintInfo();
+								if (current->getDate()->isCurrentWeek()) current->PrintInfo();
 
 							cout << "\n";
 							break;
 						case 2:
+							cout << "Введите дату в формате(31/05/2023)";
+							cin >> date;
+
+							system("cls");
+							cout << "РАСХОДЫ ЗА НЕДЕЛЮ (" << date << ")\n";
+
+							searched = new Date(date);
+							for (Expense* current : expenses)
+								if (current->getDate()->SameWeekMonthYear(searched)) current->PrintInfo();
 
 							break;
 
@@ -458,6 +507,7 @@ public:
 
 						cin >> selected;
 
+						Date* searched;
 						system("cls");
 						switch (selected) {
 						case 0: return;
@@ -470,8 +520,17 @@ public:
 
 							cout << "\n";
 							break;
-						case 2:
 
+						case 2:
+							cout << "Введите номер в месяца(1-12/2023)";
+							cin >> date;
+
+							cout << "РАСХОДЫ ЗА " << date << " \n";
+							searched = new Date("01/" + date);
+							for (Expense* current : expenses)
+								if (current->getDate()->SameMonthYear(searched)) current->PrintInfo();
+							
+							cout << "\n";
 							break;
 
 						default:

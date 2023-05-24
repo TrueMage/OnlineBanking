@@ -18,6 +18,11 @@ public:
 		this->ServiceCode = rand() % CVV;
 	}
 
+	bool isAmountOnBalanceWCredit(double request) {
+		if (abs(this->amount - amount) <= CreditLimit) return true;
+		else return false;
+	}
+
 	bool ReduceAmount(double amount) {
 		if (abs(this->amount - amount) <= CreditLimit) {
 			this->amount -= amount;

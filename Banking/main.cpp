@@ -43,6 +43,7 @@ int main()
 				break;
 
 			case 5:
+				sys.CreateRating();
 				break;
 			default:
 				cout << "ÎØÈÁÊÀ: ÍÅÊÎĞĞÅÊÒÍÛÉ ÂÂÎÄ";
