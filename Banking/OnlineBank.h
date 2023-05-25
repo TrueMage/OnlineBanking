@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "VirtualMoney.h"
 #include "Expense.h"
@@ -670,20 +671,53 @@ public:
 
 						cin >> selected;
 
-						vector<Expense*> top;
+						map<CategoryCodes, double> spendEach;
 
+						spendEach[Grocery] = 0;
+						spendEach[Entertainment] = 0;
+						spendEach[Rent] = 0;
+						spendEach[CarMaintenance] = 0;
+
+						map<CategoryCodes, double>::iterator it = spendEach.begin();
+						pair<CategoryCodes, double> highest = *spendEach.rbegin();
+						int i = 1;
+
+						system("cls");
 						switch (selected) {
 							case 0: return;
 							case 1:
-								
+								for (Expense* current : expenses)
+								{
+									if (!current->getDate()->isCurrentWeek()) continue;
+									spendEach[current->getCategory()] += current->getAmount();
+								}
+
+								cout << "ÒÎÏ - 3 ÊÀÒÅÃÎÐÈÉ ÇÀ ÍÅÄÅËÞ\n";
+								do {
+									cout << "#" << i << " Êàòåãîðèÿ " << it->first << " $" << it->second << '\n';
+									i++;
+								} while (spendEach.value_comp()(*it++, highest));
 
 								break;
 							case 2:
+								for (Expense* current : expenses)
+								{
+									if (!current->getDate()->isCurrentMonth()) continue;
+									spendEach[current->getCategory()] += current->getAmount();
+								}
+
+								cout << "ÒÎÏ - 3 ÊÀÒÅÃÎÐÈÉ ÇÀ ÌÅÑßÖ\n";
+								do {
+									cout << "#" << i << " Êàòåãîðèÿ " << it->first << " $" << it->second << '\n';
+									i++;
+								} while (spendEach.value_comp()(*it++, highest));
+
 								break;
 							default:
 								cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
 								continue;
 						}
+						break; 
 					}
 					break;
 
