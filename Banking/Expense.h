@@ -68,7 +68,7 @@ public:
 			break;
 		}
 		date->PrintDate();
-		if (paidWith) cout << " $" << amount << " " << cat << " Оплачено " << paidWith->GetLast4Digits();
-		else cout << " $" << amount << " " << cat << " Оплачено ALL";
+		if (paidWith) cout << " $" << amount << " " << cat << " Оплачено " << paidWith->GetLast4Digits() << '\n';
+		else cout << " $" << amount << " " << cat << " Оплачено ALL" << '\n';
 	}
 };

@@ -551,6 +551,12 @@ public:
 	}
 
 	void CreateRating() {
+
+		if (expenses.size() < 3) {
+			cout << "ÎØÈÁÊÀ: ÍÅÎÁÕÎÄÈÌÎ ÊÀÊ ÌÈÍÈÌÓÌ 3 ÐÀÑÕÎÄÀ, ×ÒÎÁ ÑÃÅÍÅÐÈÐÎÂÀÒÜ ÐÅÉÒÈÍÃ\n";
+			return;
+		}
+
 		while (true) {
 			system("cls");
 
@@ -567,23 +573,92 @@ public:
 				case 0: return;
 
 				case 1:
+
 					while (true) {
 						cout << "(0) Âûõîä\n";
 						cout << "(1) Çà íåäåëþ\n";
-						cout << "(2) Çà ìåñÿöü\n";
+						cout << "(2) Çà ìåñÿö\n";
 
 						cin >> selected;
 
+						vector<Expense*> top;
+
 						switch (selected) {
-						case 0: return;
-						case 1:
-							break;
-						case 2:
-							break;
-						default:
-							cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
-							continue;
+							case 0: return;
+							case 1:
+								top.push_back(expenses[0]);
+								top.push_back(expenses[1]);
+								top.push_back(expenses[2]);
+
+								for (int i = 2; i < expenses.size(); i++)
+								{
+									if (!expenses[i]->getDate()->isCurrentWeek()) continue;
+
+									if(top[0]->getAmount() < expenses[i]->getAmount()) {
+										Expense* temp1 = top[0];
+										Expense* temp2;
+										top[0] = expenses[i];
+										temp2 = top[1];
+										top[1] = temp1;
+										top[2] = temp2;
+										continue;
+									}
+									else if (top[1]->getAmount() < expenses[i]->getAmount()) {
+										Expense* temp1 = top[1];
+										top[1] = expenses[i];
+										top[2] = temp1;
+										continue;
+									}
+									else if (top[2]->getAmount() < expenses[i]->getAmount()) {
+										top[2] = expenses[i];
+									}
+								}
+
+								cout << "\nÒÎÏ-3 ÇÀÒÐÀÒ ÇÀ ÍÅÄÅËÞ\n";
+
+								for (Expense* current : top)
+									current->PrintInfo();
+
+								break;
+							case 2:
+								top.push_back(expenses[0]);
+								top.push_back(expenses[1]);
+								top.push_back(expenses[2]);
+
+								for (int i = 2; i < expenses.size(); i++)
+								{
+									if (!expenses[i]->getDate()->isCurrentMonth()) continue;
+
+									if (top[0]->getAmount() < expenses[i]->getAmount()) {
+										Expense* temp1 = top[0];
+										Expense* temp2;
+										top[0] = expenses[i];
+										temp2 = top[1];
+										top[1] = temp1;
+										top[2] = temp2;
+										continue;
+									}
+									else if (top[1]->getAmount() < expenses[i]->getAmount()) {
+										Expense* temp1 = top[1];
+										top[1] = expenses[i];
+										top[2] = temp1;
+										continue;
+									}
+									else if (top[2]->getAmount() < expenses[i]->getAmount()) {
+										top[2] = expenses[i];
+									}
+								}
+
+								cout << "\nÒÎÏ-3 ÇÀÒÐÀÒ ÇÀ ÌÅÑßÖ\n";
+
+								for (Expense* current : top)
+									current->PrintInfo();
+								break;
+							default:
+								cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+								continue;
 						}
+						break;
 					}
 					break;
 
@@ -591,19 +666,23 @@ public:
 					while (true) {
 						cout << "(0) Âûõîä\n";
 						cout << "(1) Çà íåäåëþ\n";
-						cout << "(2) Çà ìåñÿöü\n";
+						cout << "(2) Çà ìåñÿö\n";
 
 						cin >> selected;
 
+						vector<Expense*> top;
+
 						switch (selected) {
-						case 0: return;
-						case 1:
-							break;
-						case 2:
-							break;
-						default:
-							cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
-							continue;
+							case 0: return;
+							case 1:
+								
+
+								break;
+							case 2:
+								break;
+							default:
+								cout << "ÎØÈÁÊÀ: ÍÅÊÎÐÐÅÊÒÍÛÉ ÂÂÎÄ\n";
+								continue;
 						}
 					}
 					break;
